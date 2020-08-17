@@ -24,15 +24,16 @@
 [ ] Erkennung ob es statt eines Requests ein Zertifikat ist
 
 Create Tests:
-[ ] PKCS10 Request wrapped in a PKCS7 Request
+[ ] PKCS10 Request wrapped in a (signed) PKCS7 Request
 [x] CMC Request
 [x] ECC Keys
 [x] no Subject, no SAN
+[ ] invalid "C" RDN (need OpenSSL for this...?)
 [x] Key Size higher than 4096
-[ ] IPv6 Address
+[ ] IPv6 Address in IP SAN
 [x] DNS Name SAN with invalid content
-[ ] E-mail/UPN with invalid content
-[ ] IP Address SAN with invalid content
+[ ] E-mail/UPN with invalid content (need OpenSSL for this...?)
+[ ] IP Address SAN with invalid content (need OpenSSL for this...?)
 [x] CN/DNS Name with more than 64 characters
 
 Links:

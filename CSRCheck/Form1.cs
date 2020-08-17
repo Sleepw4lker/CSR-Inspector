@@ -525,34 +525,47 @@ namespace CSRCheck
             string sRawCertificateRequest = null;
 
 
-            var oRequestInterface = new CX509CertificateRequestPkcs10();
+            var oRequestInterfacePkcs10 = new CX509CertificateRequestPkcs10();
+            var oRequestInterfaceCmc = new CX509CertificateRequestCmc();
+
+            // Convert to BASE64 if it is a DER-encoded (Binary) CSR
+            if (CheckForBinary(reqFilePath))
+            {
+                byte[] bRawCertificateRequest;
+                bRawCertificateRequest = File.ReadAllBytes(reqFilePath);
+                sRawCertificateRequest = Convert.ToBase64String(bRawCertificateRequest);
+            }
+            else
+            {
+                sRawCertificateRequest = File.ReadAllText(reqFilePath);
+            }
 
             try
             {
 
-                // Convert to BASE64 if it is a DER-encoded (Binary) CSR
-                if (CheckForBinary(reqFilePath))
+                oRequestInterfaceCmc.InitializeDecode(sRawCertificateRequest, EncodingType.XCN_CRYPT_STRING_BASE64_ANY);
+                IX509CertificateRequest innerreq = oRequestInterfaceCmc.GetInnerRequest(InnerRequestLevel.LevelInnermost);
+
+                switch (innerreq.Type)
                 {
-                    byte[] bRawCertificateRequest;
-                    bRawCertificateRequest = File.ReadAllBytes(reqFilePath);
-                    sRawCertificateRequest = Convert.ToBase64String(bRawCertificateRequest);
-                }
-                else
-                {
-                    sRawCertificateRequest = File.ReadAllText(reqFilePath);
+                    case X509RequestType.TypePkcs10:
+                        sRawCertificateRequest = innerreq.get_RawData();
+                        break;
                 }
 
-                oRequestInterface.InitializeDecode(sRawCertificateRequest, EncodingType.XCN_CRYPT_STRING_BASE64_ANY);
+            }
+            catch
+            {
+                //
+            }
 
-                /*
-                 * CMC contains the PKCS10 or PKCS7 Request which can be retrieved with the CX509CertificateRequestCmcClass.GetInnerRequest(InnerRequestLevel)´Method
-                 * Nesting Level 1 should typically be a PKCS#7 Message
-                 * Nesting Level 2 should typically be our PKCS#10 Message
-                 */
+            try
+            {
+                oRequestInterfacePkcs10.InitializeDecode(sRawCertificateRequest, EncodingType.XCN_CRYPT_STRING_BASE64_ANY);
 
-                oRequestInterface.CheckSignature();
+                oRequestInterfacePkcs10.CheckSignature();
 
-                result.RequestInterface = oRequestInterface;
+                result.RequestInterface = oRequestInterfacePkcs10;
                 result.Success = true;
             }
             catch (Exception ex)
