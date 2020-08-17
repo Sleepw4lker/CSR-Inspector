@@ -18,7 +18,7 @@ namespace CSRCheck
 {
     public partial class Form1 : Form
     {
-        private CX509CertificateRequestPkcs10 oCertRequestPkcs10 = null;
+        private CX509CertificateRequestPkcs10 oRequestInterface = null;
 
         private const string XCN_OID_SUBJECT_ALT_NAME2 = "2.5.29.17";
         private const string XCN_OID_ENHANCED_KEY_USAGE = "2.5.29.37";
@@ -183,7 +183,7 @@ namespace CSRCheck
             string sTempFileName1 = Path.GetTempFileName();
             string sTempFileName2 = Path.GetTempFileName();
 
-            File.WriteAllText(sTempFileName1, oCertRequestPkcs10.RawData);
+            File.WriteAllText(sTempFileName1, oRequestInterface.RawData);
 
             try
             {
@@ -223,7 +223,7 @@ namespace CSRCheck
             File.Delete(sTempFileName1);
         }
 
-        private void InspectCsr(CX509CertificateRequestPkcs10 oRequestInterface)
+        private void InspectCsr()
         {
             bool hasEmptyCN = false;
             string SubjectName = null;
@@ -545,10 +545,9 @@ namespace CSRCheck
                 oRequestInterface.InitializeDecode(sRawCertificateRequest, EncodingType.XCN_CRYPT_STRING_BASE64_ANY);
 
                 /*
-                 * ToDo:
-                 * - support PKCS10 and CMC
-                 * - implement XML Config Interface
-                 * - implement direct Submission to CA and Certificate Retrieval
+                 * CMC contains the PKCS10 or PKCS7 Request which can be retrieved with the CX509CertificateRequestCmcClass.GetInnerRequest(InnerRequestLevel)´Method
+                 * Nesting Level 1 should typically be a PKCS#7 Message
+                 * Nesting Level 2 should typically be our PKCS#10 Message
                  */
 
                 oRequestInterface.CheckSignature();
@@ -588,9 +587,9 @@ namespace CSRCheck
                 var oCsrValidationResult = OpenCertificateRequest(sRequestFilePath);
                 if (oCsrValidationResult.Success)
                 {
-                    oCertRequestPkcs10 = oCsrValidationResult.RequestInterface;
+                    oRequestInterface = oCsrValidationResult.RequestInterface;
                     setStatus(sRequestFilePath);
-                    InspectCsr(oCertRequestPkcs10);
+                    InspectCsr();
                     button1.Enabled = true;
                 }
                 else

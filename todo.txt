@@ -34,3 +34,7 @@ Create Tests:
 [ ] E-mail/UPN with invalid content
 [ ] IP Address SAN with invalid content
 [x] CN/DNS Name with more than 64 characters
+
+Links:
+https://docs.microsoft.com/en-us/windows/win32/seccertenroll/cmc-attributes
+https://blog.keyfactor.com/using-an-ea-certificate-to-re-sign-csrs-to-add-correct-san-information
