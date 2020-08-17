@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.Diagnostics;
 
 namespace CSRCheck
 {
@@ -186,7 +187,7 @@ namespace CSRCheck
 
             try
             {
-                using System.Diagnostics.Process oProcess1 = new System.Diagnostics.Process();
+                var oProcess1 = new System.Diagnostics.Process();
                 oProcess1.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 oProcess1.StartInfo.FileName = "cmd.exe";
                 oProcess1.StartInfo.Arguments = "/c certutil -dump " + sTempFileName1 + " > " + sTempFileName2;
@@ -197,7 +198,7 @@ namespace CSRCheck
                 {
                     try
                     {
-                        using System.Diagnostics.Process oProcess2 = new System.Diagnostics.Process();
+                        var oProcess2 = new System.Diagnostics.Process();
                         oProcess2.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
                         oProcess2.StartInfo.FileName = "notepad.exe";
                         oProcess2.StartInfo.Arguments = sTempFileName2;

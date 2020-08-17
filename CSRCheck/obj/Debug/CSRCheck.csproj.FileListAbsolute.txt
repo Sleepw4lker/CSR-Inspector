@@ -24,3 +24,16 @@ C:\Users\uwe\OneDrive\Entwicklung_VS\CSRCheck\CSRCheck\obj\Debug\CSRCheck.csproj
 C:\Users\uwe\OneDrive\Entwicklung_VS\CSRCheck\CSRCheck\obj\Debug\CSRCheck.csproj.CoreCompileInputs.cache
 C:\Users\uwe\OneDrive\Entwicklung_VS\CSRCheck\CSRCheck\obj\Debug\CSRCheck.exe
 C:\Users\uwe\OneDrive\Entwicklung_VS\CSRCheck\CSRCheck\obj\Debug\CSRCheck.pdb
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\bin\Debug\CSRCheck.exe.config
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\bin\Debug\CSRCheck.exe
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\bin\Debug\CSRCheck.pdb
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.csprojAssemblyReference.cache
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\Interop.CERTCLILib.dll
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\Interop.CERTENROLLLib.dll
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.csproj.ResolveComReference.cache
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.Form1.resources
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.Properties.Resources.resources
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.csproj.GenerateResource.cache
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.csproj.CoreCompileInputs.cache
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.exe
+C:\Users\uwstoppe\OneDrive\Entwicklung_VS\CSR-Inspector\CSRCheck\obj\Debug\CSRCheck.pdb
