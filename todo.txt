@@ -1,0 +1,36 @@
+[ ] XML Config Backend with
+	[ ] Key Size limits
+	[ ] Findings Descriptions with URL
+	[ ] Valid RDNs
+	[ ] Valid ISO 3166 Country Codes
+	[ ] Certificate Enrollment Adresses (RPC, CES)
+	[ ] Whitelist/Blacklist for Subject and SAN Content
+[ ] Include Link to Blog for each finding
+[ ] Rename all Controls to meaningful names
+[ ] Drag&Drop CSR file into Window
+[ ] RegEx for DNSName - FQDN or plain HostName
+[ ] Research on limits for Number of SANs
+[x] Recognize ECC Keys and set individual Limits there (or none)
+[ ] About Dialog with Project URL, Contact E-mail and License
+[ ] Clarify if Code Snippets must be licensed
+[ ] Clarify MIT or GPL License
+[ ] Prevent Exception if malformed IP entered
+[ ] Direct Submission to Certificate Authority
+[ ] Support Multiple Languages
+[ ] Enhanced Key Usages auswerten und auflisten
+[ ] Invent Meaningful Project Name and rename the VS Project
+[ ] Select & Copy Menü für Listeneinträge
+[ ] Erkennung von PKCS#12 Dateien, Hinweis auf Privater Schlüssel Risiko
+[ ] Erkennung ob es statt eines Requests ein Zertifikat ist
+
+Create Tests:
+[ ] PKCS10 Request wrapped in a PKCS7 Request
+[x] CMC Request
+[x] ECC Keys
+[x] no Subject, no SAN
+[x] Key Size higher than 4096
+[ ] IPv6 Address
+[x] DNS Name SAN with invalid content
+[ ] E-mail/UPN with invalid content
+[ ] IP Address SAN with invalid content
+[x] CN/DNS Name with more than 64 characters
