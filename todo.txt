@@ -22,6 +22,10 @@
 [ ] Select & Copy Menü für Listeneinträge
 [ ] Erkennung von PKCS#12 Dateien, Hinweis auf Privater Schlüssel Risiko
 [ ] Erkennung ob es statt eines Requests ein Zertifikat ist
+[ ] Data Grid View für
+	[ ] Key Length
+	[ ] Key Algorithm (OID, Name)
+	[ ] Signer, falls vorhanden
 
 Create Tests:
 [ ] PKCS10 Request wrapped in a (signed) PKCS7 Request

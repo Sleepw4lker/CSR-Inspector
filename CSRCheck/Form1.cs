@@ -24,8 +24,10 @@ namespace CSRCheck
         private const string XCN_OID_ENHANCED_KEY_USAGE = "2.5.29.37";
         private const string XCN_OID_PKIX_KP_SERVER_AUTH = "1.3.6.1.5.5.7.3.1";
 
-        private const string XCN_OID_KEYALGORITHM_RSA = "1.2.840.113549.1.1.1";
-        private const string XCN_OID_KEYALGORITHM_ECC = "1.2.840.10045.2.1";
+        // https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-gpnap/ff1a8675-0008-408c-ba5f-686a10389adc
+        // https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/ns-wincrypt-crypt_algorithm_identifier
+        private const string szOID_RSA_RSA = "1.2.840.113549.1.1.1";
+        private const string szOID_ECC_PUBLIC_KEY = "1.2.840.10045.2.1";
 
         private readonly static string[] definedRDNs = { "C", "S", "L", "O", "OU", "CN", "E", "DC" };
         private readonly static string[] ISO3166CountryCodes = {
@@ -71,10 +73,10 @@ namespace CSRCheck
 
         public static class SeverityClass
         {
-            public static readonly int INFORMATIVE = 0;
-            public static readonly int LOW = 1;
-            public static readonly int WARNING = 2;
-            public static readonly int SEVERE = 3;
+            public const int INFORMATIVE = 0;
+            public const int LOW = 1;
+            public const int WARNING = 2;
+            public const int SEVERE = 3;
         }
 
         public void ResetUserInterface()
@@ -111,25 +113,25 @@ namespace CSRCheck
 
             switch (severity)
             {
-                case 0:
+                case SeverityClass.INFORMATIVE:
                     row[0] = "Information";
                     ForeColor = Color.DarkBlue;
                     BackColor = Color.White;
                     break;
 
-                case 1:
+                case SeverityClass.LOW:
                     row[0] = "Niedrig";
                     ForeColor = Color.DarkBlue;
                     BackColor = Color.White;
                     break;
 
-                case 2:
+                case SeverityClass.WARNING:
                     row[0] = "Warnung";
                     ForeColor = Color.Black;
                     BackColor = Color.Yellow;
                     break;
 
-                case 3:
+                case SeverityClass.SEVERE:
                     row[0] = "Schwerwiegend";
                     ForeColor = Color.White;
                     BackColor = Color.Red;
@@ -217,7 +219,12 @@ namespace CSRCheck
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
             }
 
             File.Delete(sTempFileName1);
@@ -232,14 +239,14 @@ namespace CSRCheck
             // Then process Key Length
             switch (oRequestInterface.PublicKey.Algorithm.Value.ToString())
             {
-                case XCN_OID_KEYALGORITHM_ECC:
+                case szOID_ECC_PUBLIC_KEY:
 
                     AddWarning(SeverityClass.INFORMATIVE, "The CSR is using Elliptic Curve Cryptography (ECC) Keys. This may cause compatibility issues.");
                     textBox1.BackColor = Color.Yellow;
 
                     break;
 
-                case XCN_OID_KEYALGORITHM_RSA:
+                case szOID_RSA_RSA:
                 default:
 
                     if (oRequestInterface.PublicKey.Length < minRecommendedKeyLength)
@@ -334,7 +341,7 @@ namespace CSRCheck
 
             }
 
-            // Process SANs
+            // Process SANs and EKUs
 
             bool rfc2818sanfound = false;
             bool isSSLcapable = false;
@@ -411,6 +418,11 @@ namespace CSRCheck
                                     if (san.strValue.StartsWith("http://") || san.strValue.StartsWith("https://"))
                                     {
                                         AddWarning(SeverityClass.SEVERE, "The DNS Name Subject Alternative Name (SAN) contains an URL instead of a Host Name, which will cause the Certificate to be treated as invalid by a Browser.");
+                                        markrow = true;
+                                    }
+                                    if (!Uri.CheckHostName(san.strValue).Equals(UriHostNameType.Dns))
+                                    {
+                                        AddWarning(SeverityClass.SEVERE, "Not a valid DNS Name");
                                         markrow = true;
                                     }
                                     break;
